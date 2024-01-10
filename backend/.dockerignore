@@ -1,0 +1,61 @@
+# Binaries for programs and plugins
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Test binary, built with 'go test -c'
+*.test
+
+# Output of the go coverage tool, specifically when used with LiteIDE
+*.out
+
+# Project-specific Go binaries
+/bin/
+/vendor/
+
+# Output of the go build command
+/build/
+
+# Output of the go install command
+/bin/
+
+# Dependency directories (remove the ones that you are not using)
+/vendor/
+/go.sum
+
+# Output directories for code coverage and profiling
+/coverprofile/
+/pprof/
+
+# Environment variable file
+.env
+
+# IDE-specific files
+.idea/
+.vscode/
+
+# Log files
+*.log
+
+# Compiled Object files, Static and Dynamic libs
+*.o
+*.a
+*.so
+
+# Output of the pprof tool
+/pprof/
+
+# Compiled Go files
+*.6
+*.out
+*.test
+
+# Ignoring binary files
+*.png
+*.jpg
+*.gif
+
+# Ignore cache directories
+.cache/

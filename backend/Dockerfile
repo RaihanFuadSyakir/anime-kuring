@@ -14,7 +14,7 @@ RUN go mod tidy
 RUN go build -o anime-kuring .
 
 # Expose the port on which the application will run
-EXPOSE 8080
+EXPOSE 5000
 
 # Define the command to run the application when the container starts
 CMD ["./anime-kuring"]

@@ -30,6 +30,6 @@ func main() {
 	app.Delete("api/users/:id", userController.DeleteUser)
 
 	// Start the server
-	port := 3000
+	port := 5000
 	app.Listen(":" + strconv.Itoa(port))
 }

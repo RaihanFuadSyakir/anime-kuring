@@ -1,0 +1,35 @@
+version: '3'
+
+services:
+  frontend:
+    build:
+      context: ./frontend
+    ports:
+      - "3000:3000"
+    # Add any other configuration specific to the frontend service
+
+  postgres:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: "weeb"
+      POSTGRES_PASSWORD: "weeb"
+      POSTGRES_DB: "weeb"
+      POSTGRES_PORT: 5432
+    ports:
+      - "5432:5432"
+    # Add any other configuration specific to the PostgreSQL service
+
+  backend:
+    build:
+      context: ./backend
+    ports:
+      - "5000:5000"
+    environment:
+      DB_USER: "weeb"
+      DB_PASSWORD: "weeb"
+      DB_NAME: "weeb"
+      DB_PORT: 5432
+      DB_HOST: postgres
+    depends_on:
+      - postgres
+    # Add any other configuration specific to the backend service
