@@ -9,12 +9,12 @@ COPY package*.json ./
 
 # Install project dependencies
 RUN npm install
-
 # Copy the entire project to the working directory
 COPY . .
-
+RUN npm run build
 # Expose the port on which the application will run (adjust as needed)
-EXPOSE 3000
+EXPOSE 5173
 
 # Define the command to run the application when the container starts
-CMD ["npm", "start"]
+CMD ["npm", "run","dev","--","--host"]
+
