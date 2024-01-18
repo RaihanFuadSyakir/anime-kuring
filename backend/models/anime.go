@@ -15,6 +15,7 @@ type License struct {
 
 type Anime struct {
 	ID          primitive.ObjectID `bson:"_id,omitempty"`
+	Index       uint               `json:"index" bson:"index"`
 	Sources     []string           `json:"sources" bson:"sources"`
 	Title       string             `json:"title" bson:"title"`
 	Type        string             `json:"type" bson:"type"`

@@ -28,7 +28,6 @@ func MigrateDB(client *mongo.Client, desiredVersion string) error {
 	// Check if migration collection exists
 	migrationCollection := db.Collection("migrations")
 	animeCollection := db.Collection("animes")
-	var result Migration
 	var res models.Anime
 	filter := bson.D{{}}
 	data_err := animeCollection.FindOne(context.TODO(), filter).Decode(&res)
@@ -37,6 +36,7 @@ func MigrateDB(client *mongo.Client, desiredVersion string) error {
 		animeCollection.InsertMany(context.TODO(), convertSlice[models.Anime](data))
 		fmt.Println("insert animes data")
 	}
+	var result Migration
 	err := migrationCollection.FindOne(context.TODO(), filter).Decode(&result)
 	if err != nil {
 		fmt.Println("no migrations collection")
@@ -56,9 +56,10 @@ func MigrateDB(client *mongo.Client, desiredVersion string) error {
 	fmt.Println("same ver migration")
 	return nil
 }
-func convertSlice[T any](data []T) []interface{} {
+func convertSlice[T models.Anime](data []models.Anime) []interface{} {
 	output := make([]interface{}, len(data))
 	for idx, item := range data {
+		item.Index = uint(idx + 1)
 		output[idx] = item
 	}
 	return output
