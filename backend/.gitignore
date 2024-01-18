@@ -59,3 +59,4 @@
 
 # Ignore cache directories
 .cache/
+/anime-offline-database.json
