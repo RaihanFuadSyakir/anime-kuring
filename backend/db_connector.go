@@ -2,35 +2,32 @@
 package main
 
 import (
+	"context"
+	"fmt"
+	"log"
 	"os"
 
 	"github.com/joho/godotenv"
-	"gorm.io/driver/postgres"
-	"gorm.io/gorm"
+	"go.mongodb.org/mongo-driver/mongo"
+	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-var db *gorm.DB
-
 // ConnectDB initializes a connection to the PostgreSQL database
-func ConnectDB() (*gorm.DB, error) {
+func ConnectDB() (*mongo.Client, error) {
+	// Load environment variables from .env file
 	// Load environment variables from .env file
 	if err := godotenv.Load(); err != nil {
 		return nil, err
 	}
-
-	// Get database connection details from environment variables
-	dsn := "user=" + os.Getenv("DB_USER") +
-		" password=" + os.Getenv("DB_PASSWORD") +
-		" dbname=" + os.Getenv("DB_NAME") +
-		" host=" + os.Getenv("DB_HOST") +
-		" port=" + os.Getenv("DB_PORT") +
-		" sslmode=disable"
-
-	// Open a connection to the PostgreSQL database
-	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
+	uri := os.Getenv("MONGODB_URI")
+	fmt.Println("this is", uri)
+	if uri == "" {
+		log.Fatal("You must set your 'MONGODB_URI' environment variable. See\n\t https://www.mongodb.com/docs/drivers/go/current/usage-examples/#environment-variable")
+	}
+	client, err := mongo.Connect(context.TODO(), options.Client().ApplyURI(uri))
 	if err != nil {
 		return nil, err
 	}
 
-	return db, nil
+	return client, nil
 }
