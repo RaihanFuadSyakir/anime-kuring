@@ -12,6 +12,7 @@ import (
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
+	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
 // Migration represents a database migration
@@ -35,6 +36,15 @@ func MigrateDB(client *mongo.Client, desiredVersion string) error {
 		data, _ := parseData()
 		animeCollection.InsertMany(context.TODO(), convertSlice[models.Anime](data))
 		fmt.Println("insert animes data")
+		var indexModels []mongo.IndexModel
+		indexModels = append(indexModels,
+			mongo.IndexModel{
+				Keys:    bson.D{{"index", 1}},
+				Options: options.Index().SetUnique(true)},
+			mongo.IndexModel{
+				Keys: bson.D{{"animeSeason.year", 1}}},
+		)
+		_, _ = animeCollection.Indexes().CreateMany(context.TODO(), indexModels)
 	}
 	var result Migration
 	err := migrationCollection.FindOne(context.TODO(), filter).Decode(&result)
