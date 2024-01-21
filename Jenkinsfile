@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment{
-        EMAIL_RECIPIENT = credentials('email-addr')
+        EMAIL_RECIPIENT = credentials('email-manager')
     }
     stages {
         stage("verify tooling"){
@@ -46,7 +46,7 @@ pipeline {
                 def buildError = currentBuild.rawBuild.logFile.text.readLines().join('\n')
                 emailext subject: 'Build Failed',
                         mimeType: 'text/html',
-                        from : 'caltfasy@gmail.com',
+                        from : '$EMAIL_RECIPIENT_USR',
                         body: """
                         The build has failed. Error details:
                         """,
