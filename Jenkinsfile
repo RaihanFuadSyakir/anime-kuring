@@ -42,12 +42,31 @@ pipeline {
 
         failure {
             script {
+                def frontError = sh(script: 'docker logs docker-composetest-frontend-1', returnStdout: true).trim()
+                def backError = sh(script: 'docker logs docker-composetest-backend-1', returnStdout: true).trim()
+                def dbError = sh(script: 'docker logs docker-composetest-mongodb-1', returnStdout: true).trim()
                 def buildError = currentBuild.rawBuild.logFile.text.readLines().join('\n')
+
                 emailext subject: 'Build Failed',
-                          body: "The build has failed. Error details:\n\n${buildError}",
-                          to: 'notsaya1@gmail.com',
-                          attachLog: true
+                        body: """
+                        The build has failed. Error details:
+
+                        Frontend Logs:
+                        ${frontError}
+
+                        Backend Logs:
+                        ${backError}
+
+                        MongoDB Logs:
+                        ${dbError}
+
+                        Jenkins Build Logs:
+                        ${buildError}
+                        """,
+                        to: 'notsaya1@gmail.com',
+                        attachLog: true
             }
+
         }
     }
 }
