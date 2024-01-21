@@ -8,19 +8,14 @@ services:
       - "5173:5173"
     # Add any other configuration specific to the frontend service
 
-  postgres:
-    image: postgres:latest
+  mongodb:
+    image: mongo:6.0.13-jammy
     restart: always
-    environment:
-      POSTGRES_USER: "weeb"
-      POSTGRES_PASSWORD: "weeb"
-      POSTGRES_DB: "weeb"
-      PGPORT: 5432
     ports:
-      - "5432:5432"
+      - "27017:27017"
     volumes:
-      - database_data:/var/lib/postgresql/data
-    # Add any other configuration specific to the PostgreSQL service
+      - mongodb_data:/data/db
+    # Add any other configuration specific to the MongoDB service
 
   backend:
     build:
@@ -28,14 +23,10 @@ services:
     ports:
       - "5000:5000"
     environment:
-      DB_USER: "weeb"
-      DB_PASSWORD: "weeb"
-      DB_NAME: "weeb"
-      DB_PORT: 5432
-      DB_HOST: postgres
+      MONGO_URI: "mongodb://mongodb:27017/main"
     depends_on:
-      - postgres
+      - mongodb
     # Add any other configuration specific to the backend service
 volumes:
-  database_data:
+  mongodb_data:
     driver: local
