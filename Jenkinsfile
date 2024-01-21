@@ -23,7 +23,7 @@ pipeline {
         }
         stage("test backend"){
             steps{
-                sh 'curl 127.0.0.1:5000/api/animes?propogate=10&page=1'
+                sh 'curl http://127.0.0.1:5000/api/animes/1 | jq'
             }
         }
     }
