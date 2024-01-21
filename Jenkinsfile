@@ -50,18 +50,6 @@ pipeline {
                         mimeType: 'text/html',
                         body: """
                         The build has failed. Error details:
-
-                        <b>Frontend Logs:</b>
-                        ${frontError}
-
-                        <b>Backend Logs:</b>
-                        ${backError}
-
-                        <b>MongoDB Logs:</b>
-                        ${dbError}
-
-                        <b>Jenkins Build Logs:</b>
-                        ${buildError}
                         """,
                         to: 'notsaya1@gmail.com',
                         attachLog: true
