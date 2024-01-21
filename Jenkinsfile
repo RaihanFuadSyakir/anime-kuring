@@ -28,12 +28,10 @@ pipeline {
         }
     }
     post{
-        always{
-            sh 'docker compose down --remove-orphans -v'
-            sh 'docker compose ps'
-        }
         success {
             script {
+                sh 'docker compose down --remove-orphans -v'
+                sh 'docker compose ps'
                 emailext subject: 'Build Successful',
                           body: 'The build was successful. Congratulations!',
                           to: 'notsaya1@gmail.com'
@@ -67,6 +65,8 @@ pipeline {
                         to: 'notsaya1@gmail.com',
                         attachLog: true
             }
+            sh 'docker compose down --remove-orphans -v'
+            sh 'docker compose ps'
 
         }
     }
