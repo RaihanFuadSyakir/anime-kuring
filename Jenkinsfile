@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment{
-        EMAIL_RECIPIENT = credentials('email-address')
+        EMAIL_RECIPIENT = credentials('email-addr')
     }
     stages {
         stage("verify tooling"){
