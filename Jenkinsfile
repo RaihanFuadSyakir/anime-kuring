@@ -40,9 +40,10 @@ pipeline {
 
         failure {
             script {
-                def frontError = sh(script: 'docker logs docker-composetest-frontend-1', returnStdout: true).trim()
-                def backError = sh(script: 'docker logs docker-composetest-backend-1', returnStdout: true).trim()
-                def dbError = sh(script: 'docker logs docker-composetest-mongodb-1', returnStdout: true).trim()
+                sh 'docker logs docker-composetest-frontend-1'
+                sh 'docker logs docker-composetest-backend-1'
+                sh 'docker logs docker-composetest-mongodb-1'
+
                 def buildError = currentBuild.rawBuild.logFile.text.readLines().join('\n')
 
                 emailext subject: 'Build Failed',
@@ -65,9 +66,8 @@ pipeline {
                         to: 'notsaya1@gmail.com',
                         attachLog: true
             }
-            sh 'docker compose down --remove-orphans -v'
-            sh 'docker compose ps'
-
+                sh 'docker compose down --remove-orphans -v'
+                sh 'docker compose ps'
         }
     }
 }
