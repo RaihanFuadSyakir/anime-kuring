@@ -6,8 +6,6 @@ import (
 	"fmt"
 	"log"
 	"os"
-
-	"github.com/joho/godotenv"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
@@ -15,10 +13,9 @@ import (
 // ConnectDB initializes a connection to the PostgreSQL database
 func ConnectDB() (*mongo.Client, error) {
 	// Load environment variables from .env file
-	// Load environment variables from .env file
-	if err := godotenv.Load(); err != nil {
-		return nil, err
-	}
+	// if err := godotenv.Load(); err != nil {
+	// 	return nil, err
+	// }
 	uri := os.Getenv("MONGODB_URI")
 	fmt.Println("this is", uri)
 	if uri == "" {
