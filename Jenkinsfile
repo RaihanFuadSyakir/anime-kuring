@@ -45,7 +45,7 @@ pipeline {
                 def buildError = currentBuild.rawBuild.logFile.text.readLines().join('\n')
                 emailext subject: 'Build Failed',
                           body: "The build has failed. Error details:\n\n${buildError}",
-                          to: '$notsaya1@gmail.com',
+                          to: 'notsaya1@gmail.com',
                           attachLog: true
             }
         }
