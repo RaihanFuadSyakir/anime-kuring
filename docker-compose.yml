@@ -24,7 +24,8 @@ services:
       - "5000:5000"
     environment:
       MONGO_URI: "mongodb://mongodb:27017/main"
-    env_file: # No file specified, it will use environment variables from the shell
+    env_file:
+      - ./backend/.env
     depends_on:
       - mongodb
     # Add any other configuration specific to the backend service
