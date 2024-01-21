@@ -17,7 +17,7 @@ pipeline {
         }
         stage("deploy and deploy services within docker compose"){
             steps{
-                sh 'docker compose up -d --no-color --wait'
+                sh 'docker compose up -d --build --no-color --wait'
                 sh 'docker compose ps'
             }
         }
