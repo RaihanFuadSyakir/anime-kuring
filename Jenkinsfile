@@ -1,6 +1,6 @@
 pipeline {
     agent any
-    environment {
+    environment{
         EMAIL_RECIPIENT = credentials('email-address')
     }
     stages {
@@ -36,7 +36,7 @@ pipeline {
             script {
                 emailext subject: 'Build Successful',
                           body: 'The build was successful. Congratulations!',
-                          to: EMAIL_RECIPIENT
+                          to: '$EMAIL_RECIPIENT'
             }
         }
 
@@ -45,7 +45,7 @@ pipeline {
                 def buildError = currentBuild.rawBuild.logFile.text.readLines().join('\n')
                 emailext subject: 'Build Failed',
                           body: "The build has failed. Error details:\n\n${buildError}",
-                          to: EMAIL_RECIPIENT,
+                          to: '$EMAIL_RECIPIENT',
                           attachLog: true
             }
         }
