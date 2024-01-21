@@ -32,7 +32,6 @@ pipeline {
             sh 'docker compose down --remove-orphans -v'
             sh 'docker compose ps'
         }
-         post {
         success {
             script {
                 emailext subject: 'Build Successful',
@@ -50,6 +49,5 @@ pipeline {
                           attachLog: true
             }
         }
-    }
     }
 }
