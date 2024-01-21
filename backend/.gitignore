@@ -31,7 +31,7 @@
 
 # Environment variable file
 .env
-
+/env
 # IDE-specific files
 .idea/
 .vscode/

@@ -23,9 +23,7 @@ services:
     ports:
       - "5000:5000"
     environment:
-      MONGO_URI: "mongodb://mongodb:27017/main"
-    env_file:
-      - ./backend/.env
+      MONGO_URI: mongodb://mongodb:27017/main
     depends_on:
       - mongodb
     # Add any other configuration specific to the backend service
