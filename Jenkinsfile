@@ -19,6 +19,9 @@ pipeline {
             steps{
                 sh 'docker compose up -d --no-color --wait'
                 sh 'docker compose ps'
+                sh 'docker logs docker-composetest-frontend-1'
+                sh 'docker logs docker-composetest-backend-1'
+                sh 'docker logs docker-composetest-mongodb-1'
             }
         }
         stage("test backend"){
@@ -40,10 +43,6 @@ pipeline {
 
         failure {
             script {
-                sh 'docker logs docker-composetest-frontend-1'
-                sh 'docker logs docker-composetest-backend-1'
-                sh 'docker logs docker-composetest-mongodb-1'
-
                 def buildError = currentBuild.rawBuild.logFile.text.readLines().join('\n')
 
                 emailext subject: 'Build Failed',
