@@ -48,19 +48,20 @@ pipeline {
                 def buildError = currentBuild.rawBuild.logFile.text.readLines().join('\n')
 
                 emailext subject: 'Build Failed',
+                        mimeType: 'text/html',
                         body: """
                         The build has failed. Error details:
 
-                        Frontend Logs:
+                        <b>Frontend Logs:</b>
                         ${frontError}
 
-                        Backend Logs:
+                        <b>Backend Logs:</b>
                         ${backError}
 
-                        MongoDB Logs:
+                        <b>MongoDB Logs:</b>
                         ${dbError}
 
-                        Jenkins Build Logs:
+                        <b>Jenkins Build Logs:</b>
                         ${buildError}
                         """,
                         to: 'notsaya1@gmail.com',
