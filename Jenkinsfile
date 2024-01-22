@@ -38,7 +38,7 @@ pipeline {
                 sh 'docker compose down --remove-orphans -v'
                 sh 'docker compose ps'
                 emailext subject: 'Build Successful',
-                         from : '$EMAIL_RECIPIENT_USR'
+                         from : '$EMAIL_RECIPIENT_USR',
                          body: "The build was successful. stored at repository ${REPO_VERSION}",
                          to: 'notsaya1@gmail.com'
             }
