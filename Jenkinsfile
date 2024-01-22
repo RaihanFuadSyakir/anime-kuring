@@ -4,6 +4,7 @@ pipeline {
         EMAIL_RECIPIENT = credentials('email-manager')
         DOCKER_ACCOUNT = credentials('docker-account')
         REPO_VERSION = "v2"
+        CONTAINER_NAME = "docker-composetest-"
     }
     stages {
         stage("verify tooling"){
@@ -35,6 +36,15 @@ pipeline {
                 sh('docker login --username $DOCKER_ACCOUNT_USR --password $DOCKER_ACCOUNT_PSW')
                 sh 'docker images'
                 sh 'docker compose ps'
+                sh 'docker commit $CONTAINER_NAME-backend-1 anime-kr-backend:$REPO_VERSION'
+                sh 'docker commit $CONTAINER_NAME-frontend-1 anime-kr-frontend:$REPO_VERSION'
+                sh 'docker commit $CONTAINER_NAME-mongodb-1 anime-kr-db:$REPO_VERSION'
+                sh 'docker tag anime-kr-backend:$REPO_VERSION docker.io/caltfasy/anime-kr-backend:$REPO_VERSION'
+                sh 'docker tag anime-kr-frontend:$REPO_VERSION docker.io/caltfasy/anime-kr-frontend:$REPO_VERSION'
+                sh 'docker tag anime-kr-db:$REPO_VERSION docker.io/caltfasy/anime-kr-db:$REPO_VERSION'
+                sh 'docker push docker.io/caltfasy/anime-kr-backend:$REPO_VERSION'
+                sh 'docker push docker.io/caltfasy/anime-kr-frontend:$REPO_VERSION'
+                sh 'docker push docker.io/caltfasy/anime-kr-db:$REPO_VERSION'
                 sh 'docker compose down --remove-orphans -v'
                 sh 'docker compose ps'
                 emailext subject: 'Build Successful',
