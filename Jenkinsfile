@@ -5,6 +5,7 @@ pipeline {
         DOCKER_ACCOUNT = credentials('docker-account')
         REPO_VERSION = "v2"
         CONTAINER_NAME = "docker-composetest"
+        PIC_EMAIL = "notsaya1@gmail.com"
     }
     stages {
         stage("verify tooling"){
@@ -49,8 +50,14 @@ pipeline {
                 sh 'docker compose ps'
                 emailext subject: 'Build Successful',
                          from : '$EMAIL_RECIPIENT_USR',
-                         body: "The build was successful. stored at repository ${REPO_VERSION}",
-                         to: 'notsaya1@gmail.com'
+                         body: """
+                         The build was successful. stored at repository ${REPO_VERSION}.
+                         you can check at
+                         https://hub.docker.com/repository/docker/caltfasy/anime-kr-db/general
+                         https://hub.docker.com/repository/docker/caltfasy/anime-kr-frontend/general
+                         https://hub.docker.com/repository/docker/caltfasy/anime-kr-backend/general
+                         """,
+                         to: '$PIC_EMAIL'
             }
         }
 
@@ -66,7 +73,7 @@ pipeline {
                         body: """
                         The build has failed. Error details:
                         """,
-                        to: 'notsaya1@gmail.com',
+                        to: '$PIC_EMAIL',
                         attachLog: true
             }
                 sh 'docker compose down --remove-orphans -v'
