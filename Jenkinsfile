@@ -39,7 +39,7 @@ pipeline {
                 sh 'docker compose ps'
                 emailext subject: 'Build Successful',
                          from : '$EMAIL_RECIPIENT_USR'
-                         body: 'The build was successful. stored at repository $REPO_VERSION',
+                         body: "The build was successful. stored at repository ${REPO_VERSION}",
                          to: 'notsaya1@gmail.com'
             }
         }
