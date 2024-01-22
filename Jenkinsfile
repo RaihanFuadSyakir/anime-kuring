@@ -4,7 +4,7 @@ pipeline {
         EMAIL_RECIPIENT = credentials('email-manager')
         DOCKER_ACCOUNT = credentials('docker-account')
         REPO_VERSION = "v2"
-        CONTAINER_NAME = "docker-composetest-"
+        CONTAINER_NAME = "docker-composetest"
     }
     stages {
         stage("verify tooling"){
