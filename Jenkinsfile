@@ -2,6 +2,7 @@ pipeline {
     agent any
     environment{
         EMAIL_RECIPIENT = credentials('email-manager')
+        DOCKER_ACCOUNT = credentials('docker-account')
     }
     stages {
         stage("verify tooling"){
@@ -29,12 +30,17 @@ pipeline {
     }
     post{
         success {
+            dev version = 'v2'
             script {
+                sh 'docker login --username $DOCKER_ACCOUNT_USR --password $DOCKER_ACCOUNT_PWD'
+                sh 'docker images'
+                sh 'docker compose ps'
                 sh 'docker compose down --remove-orphans -v'
                 sh 'docker compose ps'
                 emailext subject: 'Build Successful',
-                          body: 'The build was successful. Congratulations!',
-                          to: 'notsaya1@gmail.com'
+                         from : '$EMAIL_RECIPIENT_USR'
+                         body: 'The build was successful. stored at repository version 3',
+                         to: 'notsaya1@gmail.com'
             }
         }
 
