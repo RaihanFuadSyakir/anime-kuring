@@ -46,6 +46,7 @@ pipeline {
                 sh 'docker push docker.io/caltfasy/anime-kr-backend:$REPO_VERSION'
                 sh 'docker push docker.io/caltfasy/anime-kr-frontend:$REPO_VERSION'
                 sh 'docker push docker.io/caltfasy/anime-kr-db:$REPO_VERSION'
+                sh 'docker logout'
                 sh 'docker compose down --remove-orphans -v'
                 sh 'docker compose ps'
                 emailext subject: 'Build Successful',
