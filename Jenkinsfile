@@ -30,7 +30,7 @@ pipeline {
     }
     post{
         success {
-            dev version = 'v2'
+            def version = 'v2'
             script {
                 sh 'docker login --username $DOCKER_ACCOUNT_USR --password $DOCKER_ACCOUNT_PWD'
                 sh 'docker images'
@@ -39,7 +39,7 @@ pipeline {
                 sh 'docker compose ps'
                 emailext subject: 'Build Successful',
                          from : '$EMAIL_RECIPIENT_USR'
-                         body: 'The build was successful. stored at repository version 3',
+                         body: 'The build was successful. stored at repository $version',
                          to: 'notsaya1@gmail.com'
             }
         }
