@@ -3,6 +3,7 @@ pipeline {
     environment{
         EMAIL_RECIPIENT = credentials('email-manager')
         DOCKER_ACCOUNT = credentials('docker-account')
+        REPO_VERSION = "v2"
     }
     stages {
         stage("verify tooling"){
@@ -30,7 +31,6 @@ pipeline {
     }
     post{
         success {
-            def version = 'v2'
             script {
                 sh 'docker login --username $DOCKER_ACCOUNT_USR --password $DOCKER_ACCOUNT_PWD'
                 sh 'docker images'
