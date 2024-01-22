@@ -32,7 +32,7 @@ pipeline {
     post{
         success {
             script {
-                sh 'docker login --username $DOCKER_ACCOUNT_USR --password $DOCKER_ACCOUNT_PWD'
+                sh 'docker login --username $DOCKER_ACCOUNT_USR --password $DOCKER_ACCOUNT_PSW'
                 sh 'docker images'
                 sh 'docker compose ps'
                 sh 'docker compose down --remove-orphans -v'

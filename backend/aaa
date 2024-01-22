@@ -1,0 +1,8 @@
+DB_USER="weeb"
+DB_PASSWORD="weeb"
+DB_NAME="weeb"
+DB_HOST="localhost"
+DB_PORT=5432
+
+MONGO_TEMPLATE = "mongodb://username:password@host:port/database"
+MONGODB_URI="mongodb://mongodb:27017/main"
