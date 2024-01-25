@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      containers:
+      - name: backend-container
+        image: anime-kuring-backend
+        env:
+        - name: MONGODB_URI
+          value: "mongodb://mongodb-service:27017/main"
+        ports:
+        - containerPort: 5000
+          name: backend-port
+        imagePullPolicy: Never  # Set the imagePullPolicy to Never

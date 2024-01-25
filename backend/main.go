@@ -6,8 +6,8 @@ import (
 	"context"
 	"log"
 	"strconv"
-
 	"github.com/gofiber/fiber/v2"
+  	"github.com/gofiber/fiber/v2/middleware/cors"
 )
 
 func main() {
@@ -25,6 +25,14 @@ func main() {
 	MigrateDB(client, "v1.0")
 	// Create a new Fiber app
 	app := fiber.New()
+	// Initialize default config
+	app.Use(cors.New())
+
+	// Or extend your config for customization
+	app.Use(cors.New(cors.Config{
+		AllowOrigins: "http://172.188.96.47, localhost",
+		AllowHeaders:  "Origin, Content-Type, Accept",
+	}))
 	db := client.Database("anime-kuring")
 	// Define a route
 	// Define routes for CRUD operations using the UserController
